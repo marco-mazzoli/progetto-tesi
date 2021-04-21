@@ -16,11 +16,12 @@ def fetch_csv_data(url, date):
     result = pd.read_csv(formatted_url)
     return result
 
-def read_multiple_csv(path):
+def read_multiple_csv(path, regex=''):
     """
     Given a global path retruns a dataframe made of the csv present in that path
+	with the ending of the files name controlled by regex
     """
-    all_files = glob.glob(path + '/*.csv')
+    all_files = glob.glob(path + '/*' + regex + '.csv')
     li = []
 
     for filename in all_files:
@@ -68,3 +69,20 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
 	if dropnan:
 		agg.dropna(inplace=True)
 	return agg
+
+def read_movement_data(path, regex, region='', province=''):
+    df = read_multiple_csv(path, regex)
+    filter_region = np.NaN if region == '' else region
+    filter_province = np.NaN if province == '' else province
+
+    if region == '':
+        df = df[df['sub_region_1'].isna()]
+    else:
+        df = df[df['sub_region_1'] == region]
+    
+    if province == '':
+        df = df[df['sub_region_2'].isna()]
+    else:
+        df = df[df['sub_region_2'] == province]
+
+    return df
