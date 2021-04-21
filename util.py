@@ -20,7 +20,7 @@ def read_multiple_csv(path):
     """
     Given a global path retruns a dataframe made of the csv present in that path
     """
-    all_files = glob.glob(path + '/*0.csv')
+    all_files = glob.glob(path + '/*.csv')
     li = []
 
     for filename in all_files:
@@ -36,7 +36,7 @@ def select_attributes(frame, attributes):
 def select_relevant_rows(frame, row, filter):
     return frame[frame[row] == filter]
 
-def series_to_supervised(data, n_in = 1, n_out = 1, dropnan = True):
+def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
 	"""
 	Frame a time series as a supervised learning dataset.
 	Arguments:
