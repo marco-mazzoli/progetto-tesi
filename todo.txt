@@ -1,0 +1,2 @@
+- select correct rows
+- generate istances for time series analysis
