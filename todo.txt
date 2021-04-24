@@ -1,2 +1,9 @@
 - select correct rows
 - generate istances for time series analysis
+- plot single features
+for group in groups:
+	pyplot.subplot(len(groups), 1, i)
+	pyplot.plot(values[:, group])
+	pyplot.title(dataset.columns[group], y=0.5, loc='right')
+	i += 1
+pyplot.show()
