@@ -4,8 +4,10 @@ from datetime import date
 import csv 
 import requests
 import glob
-from pandas import DataFrame
+from pandas import DataFrame, read_csv
 from pandas import concat
+import requests
+import os.path, time
 
 def fetch_csv_data(url, date):
     """
@@ -70,7 +72,7 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
 		agg.dropna(inplace=True)
 	return agg
 
-def read_movement_data(path, regex, region='', province=''):
+def read_movement_data(path,regex='',region='',province=''):
     df = read_multiple_csv(path, regex)
     filter_region = np.NaN if region == '' else region
     filter_province = np.NaN if province == '' else province
@@ -87,42 +89,32 @@ def read_movement_data(path, regex, region='', province=''):
 
     return df
 
-# # walk-forward validation for univariate data
-# def walk_forward_validation(data, n_test):
-# 	predictions = list()
-# 	# split dataset
-# 	train, test = train_test_split(data, n_test)
-# 	# seed history with training dataset
-# 	history = [x for x in train]
-# 	# step over each time-step in the test set
-# 	for i in range(len(test)):
-# 		# split test row into input and output columns
-# 		testX, testy = test[i, :-1], test[i, -1]
-# 		# fit model on history and make a prediction
-# 		yhat = xgboost_forecast(history, testX)
-# 		# store forecast in list of predictions
-# 		predictions.append(yhat)
-# 		# add actual observation to history for the next loop
-# 		history.append(test[i])
-# 		# summarize progress
-# 		print('>expected=%.1f, predicted=%.1f' % (testy, yhat))
-# 	# estimate prediction error
-# 	error = mean_absolute_error(test[:, -1], predictions)
-# 	return error, test[:, 1], predictions
+def check_data_update_requirement(file_path):
+    result = False
+    if os.path.exists(file_path):
+        created_time = time.strftime('%Y-%m-%d', time.gmtime(os.path.getmtime(file_path)))
+        today = date.today()
+        result = False if created_time != today else True
+    else:
+        result = True
+    return result
 
-# # split a univariate dataset into train/test sets
-# def train_test_split(data, n_test):
-# 	return data[:-n_test, :], data[-n_test:, :]
-
-# # fit an xgboost model and make a one step prediction
-# def xgboost_forecast(train, testX):
-# 	# transform list into array
-# 	train = asarray(train)
-# 	# split into input and output columns
-# 	trainX, trainy = train[:, :-1], train[:, -1]
-# 	# fit model
-# 	model = XGBRegressor(objective='reg:squarederror', n_estimators=1000)
-# 	model.fit(trainX, trainy)
-# 	# make a one-step prediction
-# 	yhat = model.predict([testX])
-# 	return yhat[0]
+def download_updated_mobility_data(mobility_data_url, file_path):
+    if check_data_update_requirement(file_path):
+        request = requests.get(mobility_data_url, allow_redirects=True)
+        if request.ok:
+            print('Success!')
+            open(file_path, 'wb').write(request.content)
+        else:
+            print('Error while downloading file...')
+        os.system('rm -rf ' + region_path)
+        request = requests.get(mobility_data_zip_url, allow_redirects=True)
+        if request.ok:
+            print('Success!')
+            open(zip_path, 'wb').write(request.content)
+            os.system('unzip ' + zip_path + ' -d ' + region_path)
+            os.system('unlink ' + zip_path)
+        else:
+            print('Error while downloading file...')
+    else:
+        ('Mobility data up to date...')
