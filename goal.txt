@@ -1,0 +1,16 @@
+DataSet crea istanze della serie temporale, con variabili parametriche, ogni istanza ha i valori considerati (da file DataSet) per un valore parametrico di giorni antecedenti.
+Provincia (regione) (si puo’ scendere per comune nel caso sia disponibile, ma se i valori sono inferiori a 30 difficile fare training).
+Età in fasce (se disponibile, lavorare per fasce, numero per fascia considerata, almeno 4-5). (Assente da protezione civile.)
+Genere (in due variabili, numero uomini, numero donne, se presente da dati IRST). (Assente da protezione civile.)
+Numero di tamponi effettuati (tasso ogni 100.000 residenti).
+Numero di tamponi effettuati su nuovi soggetti (tasso ogni 100.000 residenti).
+Numero di tamponi positivi su nuovi soggetti (tasso ogni 100.000 residenti).
+Numero di tamponi positivi su totale tamponi effettuati (tasso ogni 100.000 residenti).
+Popolazione residente.
+Densità di popolazione.
+Dati mobilita’ di Google.
+
+Output
+Numero di pazienti ricoverati (tasso ogni 100.000 residenti).
+Numero di pazienti ricoverati in terapia intensiva (tasso ogni 100.000 residenti).
+Numero di decessi (tasso ogni 100.000 residenti).
