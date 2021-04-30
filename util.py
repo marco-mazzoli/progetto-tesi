@@ -9,7 +9,7 @@ from pandas import concat
 import requests
 import os.path, time
 
-def fetch_csv_data(url, date):
+def fetch_csv_data(url,date):
     """
     This function fetches from CSV data from an URL and a date formatted as YYYYMMDD.
     The URL must contain the word PLACEHOLDER, where the date will be put.
@@ -18,7 +18,7 @@ def fetch_csv_data(url, date):
     result = pd.read_csv(formatted_url)
     return result
 
-def read_multiple_csv(path, regex=''):
+def read_multiple_csv(path,regex=''):
     """
     Given a global path retruns a dataframe made of the csv present in that path
 	with the ending of the files name controlled by regex
@@ -27,16 +27,16 @@ def read_multiple_csv(path, regex=''):
     li = []
 
     for filename in all_files:
-        df = pd.read_csv(filename, index_col=None, header=0)
+        df = pd.read_csv(filename,index_col=None,header=0)
         li.append(df)
 
-    frame = pd.concat(li, axis=0, ignore_index=True)
+    frame = pd.concat(li,axis=0,ignore_index=True)
     return frame
 
-def select_attributes(frame, attributes):
+def select_attributes(frame,attributes):
     return frame[attributes]
 
-def select_relevant_rows(frame, row, filter):
+def select_relevant_rows(frame,row,filter):
     return frame[frame[row] == filter]
 
 def read_movement_data(path,regex='',region='',province=''):
@@ -68,16 +68,16 @@ def check_data_update_requirement(file_path):
         print('Data already up to date...')
     return result
 
-def download_updated_mobility_data(mobility_data_url, file_path):
+def download_updated_mobility_data(mobility_data_url,file_path,region_path,mobility_data_zip_url,zip_path):
     if check_data_update_requirement(file_path):
-        request = requests.get(mobility_data_url, allow_redirects=True)
+        request = requests.get(mobility_data_url,allow_redirects=True)
         if request.ok:
             print('Success!')
             open(file_path, 'wb').write(request.content)
         else:
             print('Error while downloading file...')
         os.system('rm -rf ' + region_path)
-        request = requests.get(mobility_data_zip_url, allow_redirects=True)
+        request = requests.get(mobility_data_zip_url,allow_redirects=True)
         if request.ok:
             print('Success!')
             open(zip_path, 'wb').write(request.content)
