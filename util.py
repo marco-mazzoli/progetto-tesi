@@ -8,6 +8,9 @@ from pandas import DataFrame, read_csv
 from pandas import concat
 import requests
 import os.path, time
+from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
+from xgboost import XGBRegressor
 
 def fetch_csv_data(url,date):
     """
@@ -87,3 +90,52 @@ def download_updated_mobility_data(mobility_data_url,file_path,region_path,mobil
             print('Error while downloading file...')
     else:
         ('Mobility data up to date...')
+
+def train_and_predict(dataset,column_to_predict,n_days,n_predictions):
+    dataset_reduced = dataset.iloc[-n_days:,:]
+
+    y = dataset_reduced[column_to_predict]
+    X = np.ascontiguousarray(dataset_reduced)
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        shuffle=False,
+        test_size=n_predictions
+        )
+    regressor = XGBRegressor(
+        objective='reg:squarederror',
+        n_estimators=1000
+        )
+
+    regressor.fit(X_train, y_train)
+    y_pred = regressor.predict(X_test)
+    return y_pred, y_test
+
+def select_optimal_window(dataset,column_to_predict,n_predictions,):
+    result = pd.DataFrame(columns=[
+        'mae',
+        'pearson',
+        'prediction_window',
+        'train_window'
+        ])
+    size = len(dataset) - n_predictions
+
+    for n_predictions in range(3,n_predictions,5):
+        size = len(dataset) - n_predictions
+        for n_days in range(50,size,25):
+            y_pred,y_test = train_and_predict(
+                dataset,
+                column_to_predict,
+                n_days,
+                n_predictions
+                )
+            mae = mean_absolute_error(y_test,y_pred)
+            current_result = {
+                'mae':mae,
+                'prediction_window':n_predictions,
+                'train_window':n_days
+                }
+            result = result.append(current_result,ignore_index=True)
+
+    return result
