@@ -112,18 +112,23 @@ def train_and_predict(dataset,column_to_predict,n_days,n_predictions):
     y_pred = regressor.predict(X_test)
     return y_pred, y_test
 
-def select_optimal_window(dataset,column_to_predict,n_predictions,):
+def select_optimal_window_linear(
+    dataset,
+    column_to_predict,
+    max_predictions=3,
+    min_pred=1,
+    pred_step=1,
+    min_days=250,
+    days_step=75
+    ):
     result = pd.DataFrame(columns=[
         'mae',
-        'pearson',
         'prediction_window',
         'train_window'
         ])
-    size = len(dataset) - n_predictions
-
-    for n_predictions in range(3,n_predictions,5):
+    for n_predictions in range(min_pred,max_predictions,pred_step):
         size = len(dataset) - n_predictions
-        for n_days in range(50,size,25):
+        for n_days in range(min_days,size,days_step):
             y_pred,y_test = train_and_predict(
                 dataset,
                 column_to_predict,
@@ -137,5 +142,4 @@ def select_optimal_window(dataset,column_to_predict,n_predictions,):
                 'train_window':n_days
                 }
             result = result.append(current_result,ignore_index=True)
-
     return result
