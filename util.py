@@ -62,7 +62,10 @@ def read_movement_data(path,regex='',region='',province=''):
 def check_data_update_requirement(file_path):
     result = False
     if os.path.exists(file_path):
-        created_time = time.strftime('%Y-%m-%d', time.gmtime(os.path.getmtime(file_path)))
+        created_time = time.strftime(
+            '%Y-%m-%d',
+            time.gmtime(os.path.getmtime(file_path))
+            )
         today = date.today()
         result = False if created_time != today else True
     else:
@@ -71,7 +74,13 @@ def check_data_update_requirement(file_path):
         print('Data already up to date...')
     return result
 
-def download_updated_mobility_data(mobility_data_url,file_path,region_path,mobility_data_zip_url,zip_path):
+def download_updated_mobility_data(
+    mobility_data_url,
+    file_path,
+    region_path,
+    mobility_data_zip_url,
+    zip_path
+    ):
     if check_data_update_requirement(file_path):
         request = requests.get(mobility_data_url,allow_redirects=True)
         if request.ok:
@@ -143,3 +152,6 @@ def select_optimal_window_linear(
                 }
             result = result.append(current_result,ignore_index=True)
     return result
+
+def select_time_slot(df,start_date,end_date):
+    return df.loc[start_date:end_date]
