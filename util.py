@@ -67,7 +67,7 @@ def check_data_update_requirement(file_path):
             time.gmtime(os.path.getmtime(file_path))
             )
         today = date.today()
-        result = False if created_time != today else True
+        result = created_time != str(today)
     else:
         result = True
     if result == False:
@@ -82,21 +82,23 @@ def download_updated_mobility_data(
     zip_path
     ):
     if check_data_update_requirement(file_path):
+        print('Downloading ' + mobility_data_url)
         request = requests.get(mobility_data_url,allow_redirects=True)
         if request.ok:
-            print('Success!')
+            print(file_path + ' downloaded!')
             open(file_path, 'wb').write(request.content)
         else:
-            print('Error while downloading file...')
+            print('Error while downloading ' + mobility_data_url)
         os.system('rm -rf ' + region_path)
+        print('Downloading ' + mobility_data_zip_url)
         request = requests.get(mobility_data_zip_url,allow_redirects=True)
         if request.ok:
-            print('Success!')
+            print(zip_path + ' downloaded!')
             open(zip_path, 'wb').write(request.content)
             os.system('unzip ' + zip_path + ' -d ' + region_path)
             os.system('unlink ' + zip_path)
         else:
-            print('Error while downloading file...')
+            print('Error while downloading ' + mobility_data_zip_url)
     else:
         ('Mobility data up to date...')
 
