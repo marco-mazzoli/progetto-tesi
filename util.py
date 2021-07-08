@@ -157,3 +157,4 @@ def select_optimal_window_linear(
 
 def select_time_slot(df,start_date,end_date):
     return df.loc[start_date:end_date]
+
