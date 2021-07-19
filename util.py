@@ -11,8 +11,6 @@ import os.path, time
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
-from statsmodels.tsa.vector_ar.vecm import coint_johansen
-from statsmodels.tsa.stattools import grangercausalitytests
 
 
 def fetch_csv_data(url,date):
@@ -132,7 +130,7 @@ def select_optimal_window_linear(
     max_predictions=3,
     min_pred=1,
     pred_step=1,
-    min_days=250,
+    min_days=100,
     days_step=75
     ):
     result = pd.DataFrame(columns=[
@@ -182,16 +180,3 @@ def grangers_causation_matrix(data,variables,test='ssr_chi2test',verbose=False,m
     df.columns = [var + '_x' for var in variables]
     df.index = [var + '_y' for var in variables]
     return df
-
-def cointegration_test(df,alpha=0.05): 
-    """Perform Johanson's Cointegration Test and Report Summary"""
-    out = coint_johansen(df,-1,1)
-    d = {'0.90':0, '0.95':1, '0.99':2}
-    traces = out.lr1
-    cvts = out.cvt[:, d[str(1-alpha)]]
-    def adjust(val, length= 6): return str(val).ljust(length)
-
-    # Summary
-    print('Name   ::  Test Stat > C(95%)    =>   Signif  \n', '--'*20)
-    for col, trace, cvt in zip(df.columns,traces,cvts):
-        print(adjust(col), ':: ', adjust(round(trace,2), 9), ">", adjust(cvt, 8), ' =>  ' , trace > cvt)
