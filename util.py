@@ -124,19 +124,21 @@ def train_and_predict(dataset,column_to_predict,n_days,n_predictions):
     y_pred = regressor.predict(X_test)
     return y_pred, y_test
 
-def select_optimal_window_linear(
+def time_series_cross_validation(
     dataset,
     column_to_predict,
-    max_predictions=3,
+    max_predictions=10,
     min_pred=1,
-    pred_step=1,
+    pred_step=3,
     min_days=100,
     days_step=75
     ):
     result = pd.DataFrame(columns=[
         'mae',
         'prediction_window',
-        'train_window'
+        'train_window',
+        'y_test',
+        'y_pred'
         ])
     for n_predictions in range(min_pred,max_predictions,pred_step):
         size = len(dataset) - n_predictions
@@ -151,7 +153,9 @@ def select_optimal_window_linear(
             current_result = {
                 'mae':mae,
                 'prediction_window':n_predictions,
-                'train_window':n_days
+                'train_window':n_days,
+                'y_test':y_test,
+                'y_pred':y_pred
                 }
             result = result.append(current_result,ignore_index=True)
     return result
