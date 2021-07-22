@@ -105,9 +105,8 @@ def download_updated_mobility_data(
 
 def train_and_predict(dataset,column_to_predict,n_days,n_predictions):
     dataset_reduced = dataset.iloc[-n_days:,:]
-
     y = dataset_reduced[column_to_predict]
-    X = np.ascontiguousarray(dataset_reduced)
+    X = np.ascontiguousarray(dataset_reduced.drop([column_to_predict],axis=1))
 
     X_train, X_test, y_train, y_test = train_test_split(
         X,
@@ -123,7 +122,7 @@ def train_and_predict(dataset,column_to_predict,n_days,n_predictions):
     regressor.fit(X_train, y_train)
     y_pred = regressor.predict(X_test)
     y_pred = pd.DataFrame(y_pred).set_index(y_test.index)
-    return y_pred, y_test
+    return y_pred, y_test    
 
 def time_series_cross_validation(
     dataset,
