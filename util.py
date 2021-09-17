@@ -185,26 +185,46 @@ def grangers_causation_matrix(data,variables,test='ssr_chi2test',verbose=False,m
     df.index = [var + '_y' for var in variables]
     return df
 
-def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
-	n_vars = 1 if type(data) is list else data.shape[1]
-	df = DataFrame(data)
-	cols, names = list(), list()
-	# input sequence (t-n, ... t-1)
-	for i in range(n_in, 0, -1):
-		cols.append(df.shift(i))
-		names += [('var%d(t-%d)' % (j+1, i)) for j in range(n_vars)]
-	# forecast sequence (t, t+1, ... t+n)
-	for i in range(0, n_out):
-		cols.append(df.shift(-i))
-		if i == 0:
-			names += [('var%d(t)' % (j+1)) for j in range(n_vars)]
-		else:
-			names += [('var%d(t+%d)' % (j+1, i)) for j in range(n_vars)]
-	# put it all together
-	agg = concat(cols, axis=1)
-	agg.columns = names
-	# drop rows with NaN values
-	if dropnan:
-		agg.dropna(inplace=True)
-	return agg
+# def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
+# 	n_vars = 1 if type(data) is list else data.shape[1]
+# 	df = DataFrame(data)
+# 	cols, names = list(), list()
+# 	# input sequence (t-n, ... t-1)
+# 	for i in range(n_in, 0, -1):
+# 		cols.append(df.shift(i))
+# 		names += [('var%d(t-%d)' % (j+1, i)) for j in range(n_vars)]
+# 	# forecast sequence (t, t+1, ... t+n)
+# 	for i in range(0, n_out):
+# 		cols.append(df.shift(-i))
+# 		if i == 0:
+# 			names += [('var%d(t)' % (j+1)) for j in range(n_vars)]
+# 		else:
+# 			names += [('var%d(t+%d)' % (j+1, i)) for j in range(n_vars)]
+# 	# put it all together
+# 	agg = concat(cols, axis=1)
+# 	agg.columns = names
+# 	# drop rows with NaN values
+# 	if dropnan:
+# 		agg.dropna(inplace=True)
+# 	return agg
+
+def series_to_supervised(data, window=1, lag=1, dropnan=True):
+    cols, names = list(), list()
+    # Input sequence (t-n, ... t-1)
+    for i in range(window, 0, -1):
+        cols.append(data.shift(i))
+        names += [('%s(t-%d)' % (col, i)) for col in data.columns]
+    # Current timestep (t=0)
+    cols.append(data)
+    names += [('%s(t)' % (col)) for col in data.columns]
+    # Target timestep (t=lag)
+    cols.append(data.shift(-lag))
+    names += [('%s(t+%d)' % (col, lag)) for col in data.columns]
+    # Put it all together
+    agg = pd.concat(cols, axis=1)
+    agg.columns = names
+    # Drop rows with NaN values
+    if dropnan:
+        agg.dropna(inplace=True)
+    return agg
 
