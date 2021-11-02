@@ -247,7 +247,7 @@ def grangers_causation_matrix(data, variables, test='ssr_chi2test', verbose=Fals
 def series_to_supervised(data, window=1, lag=1, dropnan=True, index_to_predict=0):
     cols, names = list(), list()
     # Input sequence (t-n, ... t-1)
-    for i in range(window, 0, -1):
+    for i in range(window-1, 0, -1):
         cols.append(data.shift(i))
         names += [('%s(t-%d)' % (col, i)) for col in data.columns]
     # Current timestep (t=0)
