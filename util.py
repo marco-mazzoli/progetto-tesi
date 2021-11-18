@@ -1,10 +1,8 @@
 import pandas as pd
 import numpy as np
 from datetime import date
-import csv
 import requests
 import glob
-from pandas import DataFrame, read_csv
 from pandas import concat
 import requests
 import os.path
@@ -12,6 +10,7 @@ import time
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
+import pickle
 
 
 def fetch_csv_data(url, date):
@@ -246,20 +245,61 @@ def grangers_causation_matrix(data, variables, test='ssr_chi2test', verbose=Fals
 
 def series_to_supervised(data, window=1, lag=1, dropnan=True, index_to_predict=0):
     cols, names = list(), list()
-    # Input sequence (t-n, ... t-1)
+
     for i in range(window-1, 0, -1):
         cols.append(data.shift(i))
         names += [('%s(t-%d)' % (col, i)) for col in data.columns]
-    # Current timestep (t=0)
+
     cols.append(data)
     names += [('%s(t)' % (col)) for col in data.columns]
-    # Target timestep (t=lag)
+
     cols.append(data[index_to_predict].shift(-lag))
     names += [('%s(t+%d)' % (index_to_predict, lag))]
-    # Put it all together
+
     agg = pd.concat(cols, axis=1)
     agg.columns = names
-    # Drop rows with NaN values
+
     if dropnan:
         agg.dropna(inplace=True)
     return agg
+
+
+def split_dates(data, split_percent, look_back=7):
+    split = int(split_percent*len(data))
+    date_train = data.index[:split]
+    date_test = data.index[split:]
+    date_prediction = data.index[split+look_back:]
+    return date_train, date_test, date_prediction
+
+
+def save_config(path, config):
+    pickle.dump(config, open(path, 'wb'))
+
+
+def load_config(path):
+    return pickle.load(open(path, 'rb'))
+
+
+def plot_graphs(
+        dataframe, prediction, split_percent, column_to_predict, look_back):
+    frame = dataframe[column_to_predict]
+
+    split = int(split_percent*len(frame))
+    train = frame.values[:split]
+    test = frame.values[split:]
+
+    date_train = frame.index[:split]
+    date_test = frame.index[split:]
+    date_prediction = frame.index[split+look_back:]
+
+    data_trace = go.Scatter(x=date_train, y=train, mode='lines', name='Data')
+    prediction_trace = go.Scatter(
+        x=date_prediction, y=prediction, mode='lines', name='Prediction')
+    truth_trace = go.Scatter(
+        x=date_test, y=test, mode='lines', name='Ground Truth')
+    layout = go.Layout(
+        title=column_to_predict, xaxis={'title': 'Date'},
+        yaxis={'title': column_to_predict})
+    fig = go.Figure(
+        data=[data_trace, prediction_trace, truth_trace], layout=layout)
+    fig.show()
