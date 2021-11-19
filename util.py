@@ -11,6 +11,7 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
 import pickle
+import plotly.graph_objects as go
 
 
 def fetch_csv_data(url, date):
