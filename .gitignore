@@ -143,3 +143,6 @@ __pycache__/util.cpython-38.pyc
 
 Informer2020
 ETDataset
+
+.DS_Store
+.configs/DS_Store

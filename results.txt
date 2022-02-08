@@ -1,17 +1,17 @@
-ARIMA*
+ARIMA
 
-|nuovi_positivi   | seq len 1 | no AR found            |              
-|nuovi_positivi   | seq len 2 | no AR found            |
-|nuovi_positivi   | seq len 7 | no AR found            |
-|nuovi_positivi   | seq len 14| no AR found            |
-|terapia_intensiva| seq len 1 | mae: 3.15 | mape: 0.02 |
-|terapia_intensiva| seq len 2 | mae: 3.48 | mape: 0.023|
-|terapia_intensiva| seq len 7 | mae: 5.31 | mape: 0.035|
-|terapia_intensiva| seq len 14| mae: 9.59 | mape: 0.06 | 
-|deceduti         | seq len 1 | no AR found            |
-|deceduti         | seq len 2 | no AR found            | 
-|deceduti         | seq len 7 | no AR found            | 
-|deceduti         | seq len 14| mae: 10.08| mape: 0.31 |
+|nuovi_positivi   | seq len 1 | mae: 1776.90 | mape: 0.23
+|nuovi_positivi   | seq len 2 | mae: 2156.63 | mape: 0.27
+|nuovi_positivi   | seq len 7 | mae: 2698.03 | mape: 0.33
+|nuovi_positivi   | seq len 14| mae: 3613.29 | mape: 0.40
+|terapia_intensiva| seq len 1 | mae: 3.89    | mape: 0.05
+|terapia_intensiva| seq len 2 | mae: 4.73    | mape: 0.06
+|terapia_intensiva| seq len 7 | mae: 7.43    | mape: 0.09
+|terapia_intensiva| seq len 14| mae: 10.69   | mape: 0.13
+|deceduti         | seq len 1 | mae: 6.19    | mape: 375342423248154.44
+|deceduti         | seq len 2 | mae: 6.29    | mape: 521507706980447.25
+|deceduti         | seq len 7 | mae: 6.55    | mape: 546998821336159.1
+|deceduti         | seq len 14| mae: 6.63    | mape: 506165391146328.9
 
 
 Informer
@@ -73,9 +73,3 @@ XGBoost
 |deceduti         | seq len 2 | mae: 4.06| mape: 370461544172807.1 | 
 |deceduti         | seq len 7 | mae: 4.47| mape: 428268209880481.56| 
 |deceduti         | seq len 14| mae: 5.10| mape: 511088879413297.7 | 
-
-
-*Con arima il tempo di calcolo per tutti gli intervalli era aumentato molto ed ho dovuto
- escludere i primi 500 giorni di serie.
- Il cambio di tendenza della serie ha inoltre impedito ai coeffiecienti di alcuni valori 
- di essere trovati.
