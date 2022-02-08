@@ -16,60 +16,60 @@ ARIMA
 
 Informer
 
-|nuovi_positivi   | seq len 1 | mae: 2048.90 | mape: 0.85 | 
-|nuovi_positivi   | seq len 2 | mae: 2099.47 | mape: 0.91 | 
-|nuovi_positivi   | seq len 7 | mae: 2463.75 | mape: 0.98 |
-|nuovi_positivi   | seq len 14| mae: 3099.95 | mape: 1.69 |
-|terapia_intensiva| seq len 1 | mae: 14.8213 | mape: 0.34 |
-|terapia_intensiva| seq len 2 | mae: 7.45298 | mape: 0.12 | 
-|terapia_intensiva| seq len 7 | mae: 12.7996 | mape: 0.17 | 
-|terapia_intensiva| seq len 14| mae: 27.5296 | mape: 0.29 | 
-|deceduti         | seq len 1 | mae: 4.35316 | mape: 0.49 |
-|deceduti         | seq len 2 | mae: 3.97905 | mape: 0.63 |
-|deceduti         | seq len 7 | mae: 3.60625 | mape: 0.41 |
-|deceduti         | seq len 14| mae: 4.74971 | mape: 0.46 | 
+|nuovi_positivi   | seq len 1 | mae: 2986.82| mape: 1.25 |
+|nuovi_positivi   | seq len 2 | mae: 2946.91| mape: 1.15 |
+|nuovi_positivi   | seq len 7 | mae: 3237.59| mape: 1.23 |
+|nuovi_positivi   | seq len 14| mae: 4025.23| mape: 4.88 |
+|terapia_intensiva| seq len 1 | mae: 8.78   | mape: 0.16 |
+|terapia_intensiva| seq len 2 | mae: 6.85   | mape: 0.12 |
+|terapia_intensiva| seq len 7 | mae: 10.48  | mape: 0.14 |
+|terapia_intensiva| seq len 14| mae: 20.24  | mape: 0.26 |
+|deceduti         | seq len 1 | mae: 5.06   | mape: 1.02 |
+|deceduti         | seq len 2 | mae: 3.84   | mape: 0.47 |
+|deceduti         | seq len 7 | mae: 3.94   | mape: 0.36 |
+|deceduti         | seq len 14| mae: 6.19   | mape: 0.42 |
 
 NeuralProphet
-                              mae       mape
-nuovi_positivi 1      2712.875244   0.251723
-nuovi_positivi 2      2529.613770   0.301846
-nuovi_positivi 7      2166.849854   0.322146
-nuovi_positivi 14     2547.851562   0.880001
-terapia_intensiva 1      3.429231   0.050823
-terapia_intensiva 2     12.889242   0.172576
-terapia_intensiva 7      5.582010   0.085172
-terapia_intensiva 14    18.960045   0.323547
-deceduti 1               4.705034   0.828671
-deceduti 2               4.190640   1.393021
-deceduti 7              25.978344  10.447511
-deceduti 14             12.868677   2.461681
+                              mae  mape
+nuovi_positivi 1          1692.49  0.30
+nuovi_positivi 2          1225.80  0.18
+nuovi_positivi 7          1421.16  0.25
+nuovi_positivi 14         2253.30  0.40
+terapia_intensiva 1         79.04  0.91
+terapia_intensiva 2          7.28  0.08
+terapia_intensiva 7         16.08  0.27
+terapia_intensiva 14        16.60  0.20
+deceduti 1                   4.76  7.01e+14
+deceduti 2                   6.03  7.26e+14
+deceduti 7                  16.01  5.93e+14
+deceduti 14                  4.83  7.09e+14
 
 LSTM
 
-|nuovi_positivi   | seq len 1 | mae: 33535.12 | mape: 2.29              | 
-|nuovi_positivi   | seq len 2 | mae: 82650.99 | mape: 5.30              | 
-|nuovi_positivi   | seq len 7 | mae: 8881.734 | mape: 0.72              | 
-|nuovi_positivi   | seq len 14| mae: 5429.905 | mape: 0.51              | 
-|terapia_intensiva| seq len 1 | mae: 7.81     | mape: 0.16              | 
-|terapia_intensiva| seq len 2 | mae: 5.06     | mape: 0.06              | 
-|terapia_intensiva| seq len 7 | mae: 9.70     | mape: 0.13              | 
-|terapia_intensiva| seq len 14| mae: 15.21    | mape: 0.20              | 
-|deceduti         | seq len 1 | mae: 3.91     | mape: 487404247808323.8 | 
-|deceduti         | seq len 2 | mae: 4.61     | mape: 417855515310533.44| 
-|deceduti         | seq len 7 | mae: 4.66     | mape: 492530436594541.94| 
-|deceduti         | seq len 14| mae: 4.65     | mape: 544854214354761.8 | 
+|nuovi_positivi   | seq len 1 | mae: 1965105.16| mape: 223.78            |
+|nuovi_positivi   | seq len 2 | mae: 78546.00  | mape: 7.14              |
+|nuovi_positivi   | seq len 7 | mae: 50548.74  | mape: 5.02              | 
+|nuovi_positivi   | seq len 14| mae: 42911.58  | mape: 3.52              | 
+|terapia_intensiva| seq len 1 | mae: 6.949     | mape: 0.08              | 
+|terapia_intensiva| seq len 2 | mae: 5.458     | mape: 0.06              | 
+|terapia_intensiva| seq len 7 | mae: 8.304     | mape: 0.09              | 
+|terapia_intensiva| seq len 14| mae: 16.85     | mape: 0.17              | 
+|deceduti         | seq len 1 | mae: 4.10      | mape: 530336025890282.06| 
+|deceduti         | seq len 2 | mae: 4.67      | mape: 482896773819050.94| 
+|deceduti         | seq len 7 | mae: 4.75      | mape: 464450158539090.4 | 
+|deceduti         | seq len 14| mae: 5.01      | mape: 467587266646693.0 | 
 
 XGBoost
 
-|nuovi_positivi   | seq len 1 | mae: 3932.41| mape: 0.32| 
-|nuovi_positivi   | seq len 2 | mae: 3961.80| mape: 0.33| 
-|nuovi_positivi   | seq len 7 | mae: 3900.74| mape: 0.35| 
-|nuovi_positivi   | seq len 14| mae: 3740.42| mape: 0.38|
-|terapia_intensiva| seq len 1 | mae: 6.87 | mape: 0.08 | 
-|terapia_intensiva| seq len 2 | mae: 7.32 | mape: 0.093| 
-|terapia_intensiva| seq len 7 | mae: 10.48| mape: 0.147| 
-|terapia_intensiva| seq len 14| mae: 15.38| mape: 0.20 | 
-|deceduti         | seq len 1 | mae: 4.03| mape: 358736163844455.6 | 
-|deceduti         | seq len 2 | mae: 4.06| mape: 370461544172807.1 | 
-|deceduti         | seq len 7 | mae: 4.47| mape: 428268209880481.56| 
-|deceduti         | seq len 14| mae: 5.10| mape: 511088879413297.7 | 
+|nuovi_positivi   | seq len 1 | mae: 4348.47| mape: 0.35              | 
+|nuovi_positivi   | seq len 2 | mae: 4425.40| mape: 0.37              | 
+|nuovi_positivi   | seq len 7 | mae: 4600.36| mape: 0.40              | 
+|nuovi_positivi   | seq len 14| mae: 4749.55| mape: 0.43              | 
+|terapia_intensiva| seq len 1 | mae: 7.56   | mape: 0.08              |
+|terapia_intensiva| seq len 2 | mae: 8.06   | mape: 0.09              | 
+|terapia_intensiva| seq len 7 | mae: 11.51  | mape: 0.13              | 
+|terapia_intensiva| seq len 14| mae: 19.31  | mape: 0.24              | 
+|deceduti         | seq len 1 | mae: 4.36   | mape: 335113646822836.7 | 
+|deceduti         | seq len 2 | mae: 4.37   | mape: 339416063479161.56| 
+|deceduti         | seq len 7 | mae: 4.69   | mape: 424647249940485.6 | 
+|deceduti         | seq len 14| mae: 5.39   | mape: 452510857695909.2 | 
