@@ -16,18 +16,18 @@ ARIMA
 
 Informer
 
-|nuovi_positivi   | seq len 1 | mae: 2986.82| mape: 1.25 |
-|nuovi_positivi   | seq len 2 | mae: 2946.91| mape: 1.15 |
-|nuovi_positivi   | seq len 7 | mae: 3237.59| mape: 1.23 |
-|nuovi_positivi   | seq len 14| mae: 4025.23| mape: 4.88 |
-|terapia_intensiva| seq len 1 | mae: 8.78   | mape: 0.16 |
-|terapia_intensiva| seq len 2 | mae: 6.85   | mape: 0.12 |
-|terapia_intensiva| seq len 7 | mae: 10.48  | mape: 0.14 |
-|terapia_intensiva| seq len 14| mae: 20.24  | mape: 0.26 |
-|deceduti         | seq len 1 | mae: 5.06   | mape: 1.02 |
-|deceduti         | seq len 2 | mae: 3.84   | mape: 0.47 |
-|deceduti         | seq len 7 | mae: 3.94   | mape: 0.36 |
-|deceduti         | seq len 14| mae: 6.19   | mape: 0.42 |
+|nuovi_positivi   | seq len 1 | mae: 2954.81| mape: 0.30
+|nuovi_positivi   | seq len 2 | mae: 2985.33| mape: 0.30
+|nuovi_positivi   | seq len 7 | mae: 3267.38| mape: 0.50
+|nuovi_positivi   | seq len 14| mae: 3785.89| mape: 0.71
+|terapia_intensiva| seq len 1 | mae: 13.56  | mape: 0.19
+|terapia_intensiva| seq len 2 | mae: 9.38   | mape: 0.14
+|terapia_intensiva| seq len 7 | mae: 10.53  | mape: 0.16
+|terapia_intensiva| seq len 14| mae: 25.22  | mape: 0.32
+|deceduti         | seq len 1 | mae: 5.07   | mape: 387153800000000.0
+|deceduti         | seq len 2 | mae: 4.20   | mape: 413134180000000.0
+|deceduti         | seq len 7 | mae: 4.13   | mape: 712690800000000.0
+|deceduti         | seq len 14| mae: 5.23   | mape: 586645800000000.0
 
 NeuralProphet
                               mae  mape
